@@ -9,18 +9,23 @@
 </head>
 <body>
   <div class="sky" aria-hidden="true">
-    <div class="cloud" style="top:8%;  --s:1;   animation-duration:55s"></div>
-    <div class="cloud" style="top:20%; --s:.7;  animation-duration:80s; animation-delay:-35s"></div>
-    <div class="cloud" style="top:48%; --s:1.3; animation-duration:65s; animation-delay:-20s"></div>
-    <div class="cloud" style="top:64%; --s:.8;  animation-duration:90s; animation-delay:-60s"></div>
-    <div class="cloud" style="top:82%; --s:1.1; animation-duration:70s; animation-delay:-10s"></div>
-  </div>
+  <img class="cloud-img" src="bilder/wolke1.png" alt="" style="top:6%;  --w:240px; animation-duration:55s">
+  <img class="cloud-img" src="bilder/wolke3.png" alt="" style="top:20%; --w:250px; animation-duration:65s; animation-delay:-20s">
+  <img class="cloud-img" src="bilder/wolke4.png" alt="" style="top:32%; --w:200px; animation-duration:90s; animation-delay:-60s">
 
-  <!-- Die besondere Wolke, führt zur geheimen Seite -->
-  <a class="cloud secret" href="psst-7x3k.html" aria-label="Eine besondere Wolke: hier geht es zu einer Überraschung"></a>
+<!-- Die besondere Wolke, führt zur geheimen Seite -->
+<a class="secret" href="psst-7x3k.html" style="--w:150px"
+   aria-label="Eine besondere Wolke: hier geht es zu einer Überraschung">
+  <img src="bilder/wolke2.png" alt="">
+</a>
+</div>
+
+<!-- Ab hier: endlose Schleife der unteren Bildhälfte, wird von script.js gefüllt -->
+<div class="tiles" id="tiles" aria-hidden="true"></div>
 
   <header class="hero">
     <p>Wir heiraten</p>
+    <img class="hero-photo" src="bilder/wir.jpeg" alt="Chris und Pia">
     <h1>Chris &amp; Pia</h1>
     <p>Samstag, 03. Juli 2027</p>
     <p class="hint">↓ nach unten scrollen</p>

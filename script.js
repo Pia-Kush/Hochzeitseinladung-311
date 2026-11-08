@@ -78,3 +78,25 @@ form.addEventListener("submit", async (e) => {
   }
   submit.disabled = false;
 });
+// Hintergrund: ab dem zweiten Bildschirm wird die untere Bildhälfte endlos gespiegelt wiederholt
+const tiles = document.getElementById("tiles");
+let tileCount = 0;
+
+function buildTiles() {
+  const half = window.innerHeight / 2;
+  const needed = Math.max(0,
+    Math.ceil((document.documentElement.scrollHeight - window.innerHeight) / half) + 2);
+  while (tileCount < needed) {
+    const t = document.createElement("div");
+    t.className = "tile";
+    t.innerHTML = '<div class="bg"></div>';
+    tiles.appendChild(t);
+    tileCount++;
+  }
+  while (tileCount > needed) { tiles.lastChild.remove(); tileCount--; }
+}
+
+buildTiles();
+window.addEventListener("load", buildTiles);
+window.addEventListener("resize", buildTiles);
+new ResizeObserver(buildTiles).observe(document.body);
