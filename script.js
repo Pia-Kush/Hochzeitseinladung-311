@@ -100,3 +100,21 @@ buildTiles();
 window.addEventListener("load", buildTiles);
 window.addEventListener("resize", buildTiles);
 new ResizeObserver(buildTiles).observe(document.body);
+// Countdown bis zur Hochzeit (Uhrzeit anpassen; Monat zählt ab 0, also Juli = 6)
+const WEDDING = new Date(2027, 6, 3, 14, 0, 0);
+const cd = document.getElementById("countdown");
+if (cd) {
+  const el = { d: cd.querySelector("#cd-d"), h: cd.querySelector("#cd-h"),
+               m: cd.querySelector("#cd-m"), s: cd.querySelector("#cd-s") };
+  const pad = (n) => String(n).padStart(2, "0");
+  const tick = () => {
+    const diff = WEDDING - new Date();
+    if (diff <= 0) { cd.textContent = "Heute ist es so weit! 💍"; return; }
+    el.d.textContent = Math.floor(diff / 86400000);
+    el.h.textContent = pad(Math.floor(diff / 3600000) % 24);
+    el.m.textContent = pad(Math.floor(diff / 60000) % 60);
+    el.s.textContent = pad(Math.floor(diff / 1000) % 60);
+  };
+  tick();
+  setInterval(tick, 1000);
+}

@@ -89,3 +89,9 @@ body { position: relative; isolation: isolate; }
 /* Der Kopfbereich lässt Klicks auf die Wolke dahinter durch */
 .hero, .hero > * { pointer-events: none; }
 .hero a, .hero button, .hero .card { pointer-events: auto; }
+.countdown { display: flex; gap: .5rem; justify-content: center; margin: .8rem 0; }
+.countdown div { background: var(--card); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+                 border: 1px solid rgba(255, 255, 255, .35); border-radius: 14px;
+                 padding: .5rem .4rem; min-width: 3.6rem; text-align: center; }
+.countdown b { display: block; font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.countdown span { font-size: .7rem; }
