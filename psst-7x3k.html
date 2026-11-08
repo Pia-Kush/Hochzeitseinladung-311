@@ -19,7 +19,59 @@
       <p>Willkommen zum Geheimprojekt: KaWo.</p>
       <p>Ein kleiner Geheimtipp für den besonders neugierigen um bei der großen Party auch alles zu sehen ;)</p>
     </div>
+    <div class="card" id="v-box" hidden>
+  <h2>Du bist nicht alleine</h2>
+  <p id="v-text"></p>
+  <p id="v-owner" hidden></p>
+</div>
     <a class="btn back" href="index.html">← Zurück zur Einladung</a>
   </header>
+
+<script>
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbxipv8aLH9YeVD63zwDh5lEEYas-JSyRevGlPdUvWEPDdNP2iIsR-RpSMEWXqQmkcQ/exec";
+
+(async () => {
+  const q = new URLSearchParams(location.search);
+  const box = document.getElementById("v-box");
+  const text = document.getElementById("v-text");
+  const ownerLine = document.getElementById("v-owner");
+  let owner = false, id = "";
+  try {
+    if (q.get("owner") === "aus") localStorage.removeItem("owner");
+    else if (q.has("owner")) localStorage.setItem("owner", "1");
+    owner = localStorage.getItem("owner") === "1";
+    id = localStorage.getItem("gid") || "";
+  } catch (e) {}
+  if (!id) {
+    id = Array.from(crypto.getRandomValues(new Uint8Array(10)),
+                    b => b.toString(16).padStart(2, "0")).join("");
+    try { localStorage.setItem("gid", id); } catch (e) {}
+  }
+
+  try {
+    if (ENDPOINT.startsWith("HIER")) throw new Error("ENDPOINT ist noch nicht eingetragen");
+    // Deine eigenen Aufrufe werden nur angezeigt, nicht mitgezählt
+    const r = await fetch(`${ENDPOINT}?action=${owner ? "stats" : "visit"}&id=${id}`);
+    const s = await r.json();
+    const n = Number(s.unique) || 0;
+
+    text.innerHTML = n <= 1
+      ? "Du bist der/die Erste, der/die diese Seite gefunden hat. ✨"
+      : `Bisher waren <strong>${n}</strong> verschiedene Leute hier.`;
+    box.hidden = false;
+
+    if (owner) {
+      ownerLine.textContent = `Nur für dich sichtbar: ${Number(s.total) || 0} Aufrufe insgesamt.`;
+      ownerLine.hidden = false;
+    }
+  } catch (e) {
+    // Gäste sehen bei einem Fehler nichts, nur du bekommst die Meldung
+    if (owner) {
+      text.textContent = "Zähler konnte nicht geladen werden: " + e.message;
+      box.hidden = false;
+    }
+  }
+})();
+</script>
 </body>
 </html>
