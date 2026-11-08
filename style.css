@@ -1,0 +1,41 @@
+:root { --sky-top:#3f8fe6; --sky-bottom:#bfe3ff; --ink:#1d3557; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: system-ui, sans-serif; color:var(--ink); }
+
+/* Himmel bleibt beim Scrollen fest stehen */
+.sky { position:fixed; inset:0; z-index:-1; overflow:hidden;
+       background: linear-gradient(180deg, var(--sky-top), var(--sky-bottom)); }
+
+.cloud { position:absolute; left:0; width:180px; height:55px; background:#fff;
+         border-radius:60px; opacity:.92;
+         animation: drift linear infinite; }
+.cloud::before, .cloud::after { content:""; position:absolute; background:#fff; border-radius:50%; }
+.cloud::before { width:80px; height:80px; top:-40px; left:25px; }
+.cloud::after  { width:60px; height:60px; top:-28px; left:95px; }
+
+@keyframes drift {
+  from { transform: translateX(-260px)          scale(var(--s,1)); }
+  to   { transform: translateX(calc(100vw + 60px)) scale(var(--s,1)); }
+}
+@media (prefers-reduced-motion: reduce) { .cloud { animation:none; transform:translateX(30vw); } }
+
+.hero { min-height:100svh; display:flex; flex-direction:column; align-items:center;
+        justify-content:center; text-align:center; color:#fff; padding:1rem;
+        text-shadow:0 2px 12px rgba(0,60,120,.35); }
+.hero h1 { font-size:3rem; margin:.2em 0; font-weight:600; }
+
+.card { background:rgba(255,255,255,.88); backdrop-filter:blur(6px);
+        border-radius:20px; padding:1.25rem; margin:1rem; }
+.card h2 { margin-top:0; }
+
+input, textarea, button, .btn { font:inherit; width:100%; padding:.8rem; margin:.3rem 0;
+        border-radius:12px; border:1px solid #9bbbe0; }
+button, .btn { display:block; text-align:center; text-decoration:none;
+        background:#2f6fc4; color:#fff; border:0; }
+button.secondary { background:#e4efff; color:var(--ink); }
+fieldset { border:0; padding:0; margin:.5rem 0; }
+fieldset label { display:block; padding:.3rem 0; }
+fieldset input { width:auto; margin-right:.5rem; }
+.name-row { display:flex; gap:.5rem; }
+.name-row button { width:auto; background:#e4efff; color:var(--ink); }
+.hp { position:absolute; left:-9999px; }
